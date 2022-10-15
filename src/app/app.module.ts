@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import {AngularFireModule } from '@angular/fire/compat';
-import {AngularFirestoreModule,Settings} from '@angular/fire/compat/firestore';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+import { AngularFireModule } from '@angular/fire/compat';
+import {
+  AngularFirestoreModule,
+  Settings,
+} from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule, SETTINGS } from '@angular/fire/compat/auth';
+import {
+  FlashMessagesModule,
+  FlashMessagesService,
+} from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,8 +24,11 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { ConfiguracionComponent } from './componentes/configuracion/configuracion.component';
 import { NoEncontradoComponent } from './componentes/no-encontrado/no-encontrado.component';
 import { PiePaginaComponent } from './componentes/pie-pagina/pie-pagina.component';
-import { from } from 'rxjs';
 import { ClienteService } from './services/cliente.service';
+import { LoginService } from './services/login.service';
+import { AuthGuard } from './guardianes/auth.guard';
+import { ConfiguracionService } from './services/configuracion.service';
+import { ConfiguracionGuard } from './guardianes/configuracion.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +41,7 @@ import { ClienteService } from './services/cliente.service';
     RegistroComponent,
     ConfiguracionComponent,
     NoEncontradoComponent,
-    PiePaginaComponent
+    PiePaginaComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +52,7 @@ import { ClienteService } from './services/cliente.service';
     FormsModule,
     FlashMessagesModule,
   ],
-  providers: [ClienteService, FlashMessagesService],
-  bootstrap: [AppComponent]
+  providers: [ClienteService, FlashMessagesService, LoginService, AuthGuard, ConfiguracionService, ConfiguracionGuard, { provide: SETTINGS, useValue:{}}],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
